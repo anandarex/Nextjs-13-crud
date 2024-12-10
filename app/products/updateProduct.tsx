@@ -12,7 +12,7 @@ type Product = {
 };
 
 export default function UpdateProduct(product: Product) {
-  const [id, setId] = useState(product.id);
+  const [id, setID] = useState(product.id);
   const [name, setName] = useState(product.name);
   const [month_rate, setmonth_rate] = useState(product.month_rate);
   const [day_rate, setday_rate] = useState(product.day_rate);
@@ -36,11 +36,13 @@ export default function UpdateProduct(product: Product) {
         month_rate : month_rate,
         day_rate : day_rate,
         id : id
-        
       }),
     });
 
     setIsMutating(false);
+
+    // setID("");
+    
 
     router.refresh();
     setModal(false);

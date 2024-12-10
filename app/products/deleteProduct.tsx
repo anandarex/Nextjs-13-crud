@@ -3,10 +3,18 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+// type Product = {
+//   id: number;
+//   title: string;
+//   price: number;
+// };
+
 type Product = {
-  id: number;
-  title: string;
-  price: number;
+  id: string;
+  name: string;
+  image: File;
+  month_rate: number;
+  day_rate: number;
 };
 
 export default function DeleteProduct(product: Product) {
@@ -15,12 +23,14 @@ export default function DeleteProduct(product: Product) {
 
   const router = useRouter();
 
-  async function handleDelete(productId: number) {
+  async function handleDelete(id: string) {
     setIsMutating(true);
 
-    await fetch(`http://localhost:5000/products/${productId}`, {
+    await fetch(`https://67037f39bd7c8c1ccd41a62e.mockapi.io/rent-car/api/v1/cars/${id}`, {
       method: "DELETE",
     });
+
+    // http://localhost:5000/products/${id}
 
     setIsMutating(false);
 
@@ -48,7 +58,7 @@ export default function DeleteProduct(product: Product) {
       <div className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-lg">
-            Are sure to delete {product.title} ?
+            Are sure to delete {product.name} ?
           </h3>
           <div className="modal-action">
             <button type="button" className="btn" onClick={handleChange}>

@@ -4,14 +4,18 @@ import { SyntheticEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
 type Product = {
-  id: number;
-  title: string;
-  price: number;
+  id: string;
+  name: string;
+  image: File;
+  month_rate: number;
+  day_rate: number;
 };
 
 export default function UpdateProduct(product: Product) {
-  const [title, setTitle] = useState(product.title);
-  const [price, setPrice] = useState(product.price);
+  const [id, setId] = useState(product.id);
+  const [name, setName] = useState(product.name);
+  const [month_rate, setmonth_rate] = useState(product.month_rate);
+  const [day_rate, setday_rate] = useState(product.day_rate);
   const [modal, setModal] = useState(false);
   const [isMutating, setIsMutating] = useState(false);
 
@@ -22,14 +26,17 @@ export default function UpdateProduct(product: Product) {
 
     setIsMutating(true);
 
-    await fetch(`http://localhost:5000/products/${product.id}`, {
+    await fetch(`https://67037f39bd7c8c1ccd41a62e.mockapi.io/rent-car/api/v1/cars/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        title: title,
-        price: price,
+        name: name,
+        month_rate : month_rate,
+        day_rate : day_rate,
+        id : id
+        
       }),
     });
 
@@ -58,27 +65,37 @@ export default function UpdateProduct(product: Product) {
 
       <div className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Edit {product.title}</h3>
+          <h3 className="font-bold text-lg">Edit {product.name}</h3>
           <form onSubmit={handleUpdate}>
             <div className="form-control">
-              <label className="label font-bold">Title</label>
+              <label className="label font-bold">Name</label>
               <input
                 type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 className="input w-full input-bordered"
                 placeholder="Product Name"
               />
             </div>
             <div className="form-control">
-              <label className="label font-bold">Price</label>
+              <label className="label font-bold">Month Rate</label>
               <input
-                type="text"
-                value={price}
-                onChange={(e) => setPrice(Number(e.target.value))}
+                type="number"
+                value={month_rate}
+                onChange={(e) => setmonth_rate(Number(e.target.value))}
                 className="input w-full input-bordered"
-                placeholder="Price"
+                placeholder="Month Rate"
               />
+            <div className="form-control">
+              <label className="label font-bold">Day Rate</label>
+              <input
+                type="number"
+                value={day_rate}
+                onChange={(e) => setday_rate(Number(e.target.value))}
+                className="input w-full input-bordered"
+                placeholder="Day Rate"
+              />
+            </div>
             </div>
             <div className="modal-action">
               <button type="button" className="btn" onClick={handleChange}>

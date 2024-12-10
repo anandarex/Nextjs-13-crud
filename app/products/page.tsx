@@ -8,12 +8,14 @@ export const metadata = {
 
 type Product = {
   id: number;
-  title: string;
-  price: number;
+  name: string;
+  month_rate: number;
+  day_rate: number;
+  image: File;
 };
 
 async function getProducts() {
-  const res = await fetch("http://localhost:5000/products", {
+  const res = await fetch("https://67037f39bd7c8c1ccd41a62e.mockapi.io/rent-car/api/v1/cars", {
     cache: "no-store",
   });
   return res.json();
@@ -31,16 +33,21 @@ export default async function ProductList() {
           <tr>
             <th>#</th>
             <th>Product Name</th>
-            <th>Price</th>
-            <th>Actions</th>
+            <th>Month Rate</th>
+            <th>Day Rate</th>
+            {/* <th>Car Picture</th> */}
+            <th> </th>
+            <th> </th>
           </tr>
         </thead>
         <tbody>
           {products.map((product, index) => (
             <tr key={product.id}>
               <td>{index + 1}</td>
-              <td>{product.title}</td>
-              <td>{product.price}</td>
+              <td>{product.name}</td>
+              <td>{product.month_rate}</td>
+              <td>{product.day_rate}</td>
+              
               <td className="flex">
                 <div className="mr-1">
                   <UpdateProduct {...product} />

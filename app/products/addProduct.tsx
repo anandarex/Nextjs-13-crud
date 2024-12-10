@@ -4,8 +4,10 @@ import { SyntheticEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function AddProduct() {
-  const [title, setTitle] = useState("");
-  const [price, setPrice] = useState("");
+  const [id, setID] = useState("");
+  const [name, setname] = useState("");
+  const [month_rate, setmonth_rate] = useState("");
+  const [day_rate, setday_rate] = useState("");
   const [modal, setModal] = useState(false);
   const [isMutating, setIsMutating] = useState(false);
 
@@ -16,21 +18,26 @@ export default function AddProduct() {
 
     setIsMutating(true);
 
-    await fetch("http://localhost:5000/products", {
+    await fetch("https://67037f39bd7c8c1ccd41a62e.mockapi.io/rent-car/api/v1/cars", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        title: title,
-        price: price,
+        name: name,
+        month_rate : month_rate,
+        day_rate : day_rate,
+        id : id
       }),
     });
 
     setIsMutating(false);
 
-    setTitle("");
-    setPrice("");
+    setname("");
+    setID("");
+    setmonth_rate("");
+    setday_rate("");
+
     router.refresh();
     setModal(false);
   }
@@ -42,7 +49,7 @@ export default function AddProduct() {
   return (
     <div>
       <button className="btn" onClick={handleChange}>
-        Add New
+        Add New Car
       </button>
 
       <input
@@ -54,26 +61,45 @@ export default function AddProduct() {
 
       <div className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Add New Product</h3>
+          <h3 className="font-bold text-lg">Add New Car</h3>
           <form onSubmit={handleSubmit}>
             <div className="form-control">
-              <label className="label font-bold">Title</label>
+              <label className="label font-bold">Car Name</label>
               <input
                 type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                value={name}
+                onChange={(e) => setname(e.target.value)}
                 className="input w-full input-bordered"
-                placeholder="Product Name"
+                placeholder="Car Name"
               />
             </div>
             <div className="form-control">
-              <label className="label font-bold">Price</label>
+              <label className="label font-bold">Month Rate</label>
               <input
                 type="text"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
+                value={month_rate}
+                onChange={(e) => setmonth_rate(e.target.value)}
                 className="input w-full input-bordered"
-                placeholder="Price"
+                placeholder="Month Rate"
+              />
+            </div>
+            <div className="form-control">
+              <label className="label font-bold">Day Rate</label>
+              <input
+                type="text"
+                value={day_rate}
+                onChange={(e) => setday_rate(e.target.value)}
+                className="input w-full input-bordered"
+                placeholder="Day Rate"
+              />
+            </div>
+            <div className="form-control">
+              <label className="label font-bold">Upload Image</label>
+              <input 
+                type="file"
+                id="input"
+                accept="image/*"
+                placeholder="Image"
               />
             </div>
             <div className="modal-action">
